@@ -9,9 +9,11 @@ def minimumWaitingTime(queries):
     
     queries.sort()
     sumOfQueries = 0
+    prevQuery = 0
     for i in range(len(queries) - 1):
-        sumOfQueries += (sumOfQueries + queries[i])
-        print(sumOfQueries)
+        sumOfQueries = sumOfQueries + prevQuery + queries[i]
+        prevQuery = prevQuery + queries[i]
+        print(prevQuery, sumOfQueries)
         
     return sumOfQueries
 
