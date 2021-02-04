@@ -7,10 +7,16 @@ Created on Sat Jan 30 17:35:55 2021
 
 def quickSort(array):
     # Write your code here.
-    return quickSortHelper(array, p = 0, l = 1, r = len(array) - 1)
+    return quickSortHelper(array, startIndex = 0, endIndex = len(array) - 1)
     
-def quickSortHelper(array, p, l, r):
-    # Write your code here.
+def quickSortHelper(array, startIndex, endIndex):
+    # Write your code here.\
+    if startIndex > endIndex:
+        return 
+    
+    p = startIndex
+    l = startIndex + 1
+    r = endIndex
     
     while r >= l:
         if array[l] > array[p] and array[r] < array[p]:
@@ -25,10 +31,10 @@ def quickSortHelper(array, p, l, r):
     swap(array, p, r)
     
     if len(array[:r]) > 1:
-        array[:r] = quickSortHelper(array[:r], 0, 1, len(array[:r]) - 1)
+        quickSortHelper(array, startIndex,  r - 1)
         
-    if r + 1 < len(array) and len(array[r + 1:]) > 1:
-        array[r + 1:] = quickSortHelper(array[r + 1:], 0, 1, len(array[r + 1:]) - 1)
+    if len(array[r + 1:]) > 1:
+        quickSortHelper(array, r + 1, endIndex)
     
     return array
             
@@ -36,4 +42,4 @@ def swap(array, l, r):
     array[l], array[r] = array[r], array[l]
 
 array = [8, 5, 2, 9, 5, 6, 3]
-quickSortHelper(array, 0, 1, len(array) - 1)
+quickSort(array)
