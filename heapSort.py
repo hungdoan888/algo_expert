@@ -5,54 +5,41 @@ Created on Sat Feb  6 15:49:10 2021
 @author: hungd
 """
 
-class MinHeap:
-    def __init__(self, array):
-        self.heap = self.buildHeap(array)
+def buildHeap(array):
+    lastParent = (len(array) - 2) // 2
+    for parentIdx in reversed(range(lastParent + 1)):
+        siftDown(array, parentIdx, len(array))
+    return array
         
-    # child1Idx = parentIdx * 2 + 1
-    # child2Idx = parentIdx * 2 + 2
-    # parentIdx = (childIdx - 1) // 2
-    def buildHeap(self, array):
-        lastParent = (len(array) - 2) // 2
-        for parentIdx in reversed(range(lastParent + 1)):
-            self.siftDown(array, parentIdx)
-        return array
-            
-    def siftDown(self, heap, parentIdx):
-        lastParent = (len(heap) - 2) // 2
-        if parentIdx > lastParent:
-            return
-        
-        child1Idx = parentIdx * 2 + 1
-        child2Idx = parentIdx * 2 + 2
-        if child2Idx > len(heap) - 1:
-            child2Idx = len(heap) - 1
-            
-        if heap[child1Idx] < heap[child2Idx]:
-            childIdx = child1Idx
-        else:
-            childIdx = child2Idx
-            
-        if heap[childIdx] < heap[parentIdx]:
-            swap(heap, childIdx, parentIdx)
-        self.siftDown(heap, childIdx)
+def siftDown(heap, parentIdx, lengthArray):
+    lastParent = (lengthArray - 2) // 2
+    if parentIdx > lastParent:
+        return
     
-    def remove(self):
-        swap(self.heap, 0, len(self.heap) - 1)
-        value2remove = self.heap.pop()
-        self.siftDown(self.heap, 0)
-        return value2remove
+    child1Idx = parentIdx * 2 + 1
+    child2Idx = parentIdx * 2 + 2
+    if child2Idx > lengthArray - 1:
+        child2Idx = lengthArray - 1
+        
+    if heap[child1Idx] > heap[child2Idx]:
+        childIdx = child1Idx
+    else:
+        childIdx = child2Idx
+        
+    if heap[childIdx] > heap[parentIdx]:
+        swap(heap, childIdx, parentIdx)
+    siftDown(heap, childIdx, lengthArray)
     
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
         
 def heapSort(array):
     # Write your code here.
-    heap = MinHeap(array)
-    newArray = []
-    for i in range(len(heap.heap)):
-        newArray.append(heap.remove())
-    return newArray
+    buildHeap(array)
+    for i in range(1, len(array)):
+        swap(array, 0, len(array) - i)
+        siftDown(array, 0, len(array) - i)
+    return array
 
 array = [8, 5, 2, 9, 5, 6, 3]
 heapSort(array)
