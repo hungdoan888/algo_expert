@@ -7,12 +7,11 @@ Created on Tue Mar  2 21:05:15 2021
 
 def solveSudoku(board):
     # Write your code here.
-    board_truth = board[:][:]
+    board_truth = [list(x) for x in board]
     i = 0
     while i < 9:
         j = 0
         while j < 9:
-            print(j)
             if board_truth[i][j] != 0:
                 j += 1
                 continue
@@ -24,13 +23,20 @@ def solveSudoku(board):
             if not OkToInsert:
                 i, j = backtrack(board, board_truth, i, j)
                 
-            j += 1
             print(board)
+            print("")
+            j += 1
         i += 1
     return board
             
 def backtrack(board, board_truth, row, col):
     
+    board[row][col] = 0
+    if col == 0:
+        col = 9
+    else:
+        row += 1
+        
     for i in reversed(range(row)):
         for j in reversed(range(col)):
             if board_truth[i][j] != 0:
