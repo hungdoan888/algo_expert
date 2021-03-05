@@ -17,14 +17,11 @@ def solveSudoku(board):
                 continue
             
             # insert value and check if it is ok
-            OkToInsert = insertValidValue(board, 0, i, j)
+            OkToInsert = insertValidValue(board, 1, i, j)
             
             # if it is not possible, backtrack
             if not OkToInsert:
                 i, j = backtrack(board, board_truth, i, j)
-                
-            print(board)
-            print("")
             j += 1
         i += 1
     return board
@@ -49,6 +46,7 @@ def backtrack(board, board_truth, row, col):
                 board[i][j] = 0
             else:
                 return i, j
+        col = 9
                    
 # Valid Value
 def insertValidValue(board, start, i, j):
