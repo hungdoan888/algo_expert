@@ -26,6 +26,7 @@ def solveSudoku(board):
         i += 1
     return board
             
+
 def backtrack(board, board_truth, row, col):
     
     board[row][col] = 0
