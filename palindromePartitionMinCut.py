@@ -17,23 +17,17 @@ def palindromePartitioningMinCuts(string):
             pMatrix[i][j] = isPalindrome(string[i:j + 1])
     
     # Create Values Matrix
-    cuts = [[0 for i in string] for j in string]
-    
-    # Fill in first row of values matrix
-    for i in range(1, len(string)):
-        if pMatrix[0][i] is False:
-            cuts[0][i] = cuts[0][i - 1] + 1
-            
-    # Fill in the rest of the matrix
-    for i in range(1, len(string) - 1):
-        cuts[i][i] = cuts[i -1][i]
-        for j in range(i + 1, len(string)):
-            if pMatrix[i][j] is True:
-                cuts[i][j] = cuts[i][i]
-            else:
-                cuts[i][j] = min(cuts[i - 1][j], cuts[i][j - 1] + 1)
-         
-    return cuts[-2][-1]
+    cuts = [float("inf") for i in range(len(string))]
+    cuts[0] = 0
+    for j in range(1, len(cuts)):
+        if pMatrix[0][j]:
+            cuts[j] = 0
+        else:
+            cuts[j] = cuts[j - 1] + 1
+            for i in range(1, j):
+                if pMatrix[i][j] and cuts[i - 1] + 1 < cuts[j]:
+                    cuts[j] = cuts[i - 1] + 1
+    return cuts[-1]
         
     
 def isPalindrome(string):
